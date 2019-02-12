@@ -1,10 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class Estimation extends JPanel{
 	private JLabel textComboBox;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private JTextArea textAreaPetit;
 	private JTextArea textAreaMoyen;
 	private JTextArea textAreaBarrel;
@@ -24,9 +23,7 @@ public class Estimation extends JPanel{
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints contrainte = new GridBagConstraints();
 		textComboBox = new JLabel("Selectionner une piece");
-		List<String> elements = ModelInit.getPiece();
-		elements.add(0, "- - -");
-		comboBox = new JComboBox(elements.toArray());
+		comboBox = new JComboBox<String>();
 		controle=new ControleurEstimation(this);
 		textAreaPetit = new JTextArea("0",1,2);
 		textAreaMoyen = new JTextArea("0",1,2);
@@ -142,8 +139,9 @@ public class Estimation extends JPanel{
 		this.textTableaux = textTableaux;
 	}
 
-	public void setComboBox(JComboBox comboBox) {
-		this.comboBox = comboBox;
+	public void setComboBox(List l) {
+		this.comboBox.setModel(new DefaultComboBoxModel<String>(l.getItems()));;
+		this.comboBox.revalidate();
 	}
 
 	public void setTextAreaPetit(JTextArea textAreaPetit) {

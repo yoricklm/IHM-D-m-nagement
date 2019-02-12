@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.util.List;
 import java.awt.*;
 
 public class Fenetre extends JFrame{
@@ -11,7 +10,7 @@ public class Fenetre extends JFrame{
 	private Declaration panelDeclaration;
 	private Inventaire panelInventaire;
 	private ListeMeuble panelList;
-	private ControleurInit init;
+	private ControleurInit controleComponent;
 
 
 	private CardLayout layout ;
@@ -22,17 +21,16 @@ public class Fenetre extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints contrainte = new GridBagConstraints();
-		List<String> list;
 		m = new Menu();
 		c = new JPanel();
-		//init=new ControleurInit(list);
+
 		layout = new CardLayout();
 		panelEstimation = new Estimation();
 		panelIdentification = new Identification();
+		
 		panelDeclaration = new Declaration();
 		panelInventaire = new Inventaire();
 		panelList = new ListeMeuble();
-
 		c.setLayout(layout);
 		c.add(panelIdentification,"identification");
 		c.add(panelEstimation,"estimation");
@@ -40,7 +38,8 @@ public class Fenetre extends JFrame{
 		c.add(panelInventaire,"inventaire");
 		c.add(panelList,"listMeuble");
 
-		controleMenu = new ControleurMenu(c,layout);
+		controleMenu = new ControleurMenu(c,layout,m);
+		controleComponent=new ControleurInit(this);
 		contrainte.gridx=0; 
 		contrainte.gridy=0; 
 		contrainte.gridwidth=1; 
@@ -55,13 +54,73 @@ public class Fenetre extends JFrame{
 		contrainte.fill=GridBagConstraints.BOTH;
 		this.add(c,contrainte);
 		layout.show(c,"identification");
+		panelIdentification.addComponentListener(controleComponent);
+		panelEstimation.addComponentListener(controleComponent);
+		panelList .addComponentListener(controleComponent);
+		panelDeclaration.addComponentListener(controleComponent);
+		panelInventaire.addComponentListener(controleComponent);
 
-		this.addWindowListener(init);
 		m.getButtonEstimation().addActionListener(controleMenu);
 		m.getButtonMeuble().addActionListener(controleMenu);
 		m.getButtonDeclaration().addActionListener(controleMenu);
 		m.getButtonInventaire().addActionListener(controleMenu);
 		m.getButtonList().addActionListener(controleMenu);
+
+	}
+	public Menu getM() {
+		return m;
+	}
+	public void setM(Menu m) {
+		this.m = m;
+	}
+	public JPanel getC() {
+		return c;
+	}
+	public void setC(JPanel c) {
+		this.c = c;
+	}
+	public ControleurMenu getControleMenu() {
+		return controleMenu;
+	}
+	public void setControleMenu(ControleurMenu controleMenu) {
+		this.controleMenu = controleMenu;
+	}
+	public Estimation getPanelEstimation() {
+		return panelEstimation;
+	}
+	public void setPanelEstimation(Estimation panelEstimation) {
+		this.panelEstimation = panelEstimation;
+	}
+	public Identification getPanelIdentification() {
+		return panelIdentification;
+	}
+	public void setPanelIdentification(Identification panelIdentification) {
+		this.panelIdentification = panelIdentification;
+	}
+	public Declaration getPanelDeclaration() {
+		return panelDeclaration;
+	}
+	public void setPanelDeclaration(Declaration panelDeclaration) {
+		this.panelDeclaration = panelDeclaration;
+	}
+	public Inventaire getPanelInventaire() {
+		return panelInventaire;
+	}
+	public void setPanelInventaire(Inventaire panelInventaire) {
+		this.panelInventaire = panelInventaire;
+	}
+	public ListeMeuble getPanelList() {
+		return panelList;
+	}
+	public void setPanelList(ListeMeuble panelList) {
+		this.panelList = panelList;
+	}
+
+	public CardLayout getLayout() {
+		return layout;
+	}
+	public void setLayout(CardLayout layout) {
+		this.layout = layout;
 	}
 
 

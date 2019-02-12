@@ -1,36 +1,29 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+
 
 public class PanelListe extends JPanel {
-	private JLabel textMeuble;
-	private JComboBox box;
-	public PanelListe(String meuble,List<String> piece) {
+	private JLabel textQuantite;
+	private JLabel textNom;
+
+	public PanelListe(int n,String nom) {
 		super();
+		this.setBackground(Color.WHITE);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints contrainte = new GridBagConstraints();
-		textMeuble = new JLabel(meuble);
-		box = new JComboBox(piece.toArray());
+		textQuantite = new JLabel(""+n);
+		textNom = new JLabel(nom);
 		contrainte.gridx=0; 
 		contrainte.gridy=0; 
-		contrainte.gridwidth=2;
+		contrainte.gridwidth=1;
 		contrainte.gridheight=1; 
 		contrainte.anchor=GridBagConstraints.BASELINE_LEADING;
-		contrainte.insets= new Insets(0,5,0,0);
-		this.add(textMeuble,contrainte);
-		contrainte.gridx=2; 
-		this.add(box,contrainte);
+		contrainte.insets= new Insets(0,10,0,0);
+		this.add(textQuantite,contrainte);
+		contrainte.insets= new Insets(0,3,0,0);
+		contrainte.gridx=1; 
+		this.add(textNom,contrainte);
+		this.setPreferredSize(new Dimension(450,20));
 	}
-	public JLabel getTextMeuble() {
-		return textMeuble;
-	}
-	public void setTextMeuble(JLabel textMeuble) {
-		this.textMeuble = textMeuble;
-	}
-	public JComboBox getBox() {
-		return box;
-	}
-	public void setBox(JComboBox box) {
-		this.box = box;
-	}
+
 }

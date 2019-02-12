@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.util.List;
 import java.awt.*; 
 import java.awt.GridBagConstraints; 
 import java.awt.GridBagLayout;
@@ -12,12 +11,14 @@ public class Identification extends JPanel{
 	private JTextArea textAreaLargeur;
 	private JTextArea textAreaHauteur;
 	private JLabel textDimension;
+	private JLabel textNom;
+	private JTextArea textAreaNom;
 	private JLabel textElement;
 	private JLabel textComboBox;
 	private JCheckBox checkBoxDemontable;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private JButton buttonValider;
-	private JLabel panelImage;
+	private JPanel panelImage;
 	private ControleurIdentification controle;
 	private JButton buttonAjouter;
 	private JScrollPane scroll;
@@ -28,29 +29,29 @@ public class Identification extends JPanel{
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints contrainte = new GridBagConstraints();
-		panelImage = new JLabel();
+		panelImage = new JPanel();
 		panelImage.setPreferredSize(new Dimension(200,200));
 		panelImage.setBackground(Color.WHITE);
 		textAreaDescription = new JTextArea("Description",5,40);
 		textDimension = new JLabel("Dimension (en cm):");
 		textAreaElement = new JTextArea("",1,2);
+		textNom=new JLabel("Nom:");
+		textAreaNom = new JTextArea("Nom",1,10);
 		textElement = new JLabel("Nombre d'element");
 		textAreaLongueur = new JTextArea("Longueur",1,5);
 		textAreaLargeur = new JTextArea("Largeur",1,5);
 		textAreaHauteur = new JTextArea("Hauteur",1,5);
 		checkBoxDemontable = new JCheckBox("Demontable ?");
 		textComboBox = new JLabel("Destination");
-		
-		List<String> elements = ModelInit.getPiece();
-		elements.add(0, "- - -");
-		comboBox = new JComboBox(elements.toArray());
+
+		comboBox = new JComboBox<String>();
 		
 		buttonValider = new JButton("Valider");
 		buttonAjouter= new JButton("Ajouter element");
 		controle = new ControleurIdentification(this);
 		controleAjoutMeuble = new ControleurAjoutMeuble(this);
 		scroll = new JScrollPane(p, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
+		scroll.setPreferredSize(new Dimension(40,40));
 		
 		buttonValider.addActionListener(controleAjoutMeuble);
 		checkBoxDemontable.addItemListener(controle);
@@ -60,7 +61,6 @@ public class Identification extends JPanel{
 		buttonAjouter.setEnabled(false);
 		textElement.setEnabled(false);
 		scroll.setVisible(false);
-		scroll.setPreferredSize(new Dimension(50,50));
 		
 		contrainte.gridx=0; 
 		contrainte.gridy=0; 
@@ -72,12 +72,23 @@ public class Identification extends JPanel{
 
 		contrainte.gridx=0; 
 		contrainte.gridy=1; 
+		contrainte.gridwidth=1;
+		contrainte.fill=GridBagConstraints.NONE;
+		contrainte.anchor=GridBagConstraints.BASELINE_LEADING;
+		this.add(textNom,contrainte);
+		contrainte.gridx=1; 
+		contrainte.gridwidth=GridBagConstraints.REMAINDER; 
+
+		this.add(textAreaNom,contrainte);
+		
+		contrainte.gridx=0; 
+		contrainte.gridy=2; 
 		contrainte.fill=GridBagConstraints.BOTH;
 		contrainte.anchor=GridBagConstraints.CENTER;
 		this.add(textAreaDescription,contrainte);
 
 		contrainte.gridx=0; 
-		contrainte.gridy=2; 
+		contrainte.gridy=3; 
 		contrainte.gridwidth=1;
 		contrainte.fill=GridBagConstraints.NONE;
 		contrainte.anchor=GridBagConstraints.BASELINE_LEADING;
@@ -96,9 +107,9 @@ public class Identification extends JPanel{
 		this.add(textAreaHauteur,contrainte);
 		
 		contrainte.gridx=0; 
-		contrainte.gridy=3; 
+		contrainte.gridy=4; 
 		contrainte.gridwidth=1; 
-		this.add(checkBoxDemontable);//setBackground
+		this.add(checkBoxDemontable);
 		
 		contrainte.gridx=1;
 		contrainte.gridwidth=1;
@@ -126,7 +137,6 @@ public class Identification extends JPanel{
 		this.add(textComboBox,contrainte);
 
 		contrainte.gridx=1; 
-		contrainte.gridy=6; 
 		contrainte.gridwidth=GridBagConstraints.REMAINDER; 
 		this.add(comboBox,contrainte);
 		
@@ -160,6 +170,22 @@ public class Identification extends JPanel{
 
 	public void setScroll(JScrollPane scroll) {
 		this.scroll = scroll;
+	}
+
+	public JTextArea getTextAreaNom() {
+		return textAreaNom;
+	}
+
+	public void setTextAreaNom(JTextArea textAreaNom) {
+		this.textAreaNom = textAreaNom;
+	}
+
+	public JPanel getPanelImage() {
+		return panelImage;
+	}
+
+	public void setPanelImage(JPanel panelImage) {
+		this.panelImage = panelImage;
 	}
 
 	public JPanelScroll getP() {
@@ -226,12 +252,13 @@ public class Identification extends JPanel{
 		this.checkBoxDemontable = checkBoxDemontable;
 	}
 
-	public JComboBox getComboBox() {
+	public JComboBox<String> getComboBox() {
 		return comboBox;
 	}
 
-	public void setComboBox(JComboBox comboBox) {
-		this.comboBox = comboBox;
+	public void setComboBox(List l) {
+		this.comboBox.setModel(new DefaultComboBoxModel<String>(l.getItems()));;
+		this.comboBox.revalidate();
 	}
 
 	/*public JPanel getPanelImage() {

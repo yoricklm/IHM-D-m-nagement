@@ -1,8 +1,5 @@
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.util.List;
+import java.awt.*;
+
 
 import javax.swing.*;
 
@@ -12,22 +9,24 @@ public class Declaration extends JPanel{
 	private JLabel textComboBox;
 	private JTextArea textAreaValeur;
 	private JTextArea textAreaFacture;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private JButton buttonValider;
+	private Meuble[] meuble;
+	private ControleurAjoutFacture controleFacture;
 	public Declaration() {
 		super();
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints contrainte = new GridBagConstraints();
+		controleFacture=new ControleurAjoutFacture(this);
 		textValeur = new JLabel("Valeur");
 		textFacture = new JLabel("Facture");
 		textAreaValeur = new JTextArea("0",1,2);
 		textAreaFacture = new JTextArea("facture.pdf",1,10);
 		textComboBox = new JLabel("Selectionner un bien");
 		buttonValider = new JButton("Valider");
-		List<String> elements = ModelInit.getPiece();
-		elements.add(0, "- - -");
-		comboBox = new JComboBox(elements.toArray());
+		comboBox = new JComboBox<String>();
+		buttonValider.addActionListener(controleFacture);
 		
 		contrainte.gridx=0; 
 		contrainte.gridy=0; 
@@ -69,6 +68,55 @@ public class Declaration extends JPanel{
 		contrainte.insets= new Insets(50,10,10,10);
 		this.add(buttonValider,contrainte);
 
+	}
+	public Meuble[] getMeuble() {
+		return meuble;
+	}
+	public void setMeuble(Meuble[] meuble) {
+		this.meuble = meuble;
+	}
+	public JLabel getTextValeur() {
+		return textValeur;
+	}
+	public void setTextValeur(JLabel textValeur) {
+		this.textValeur = textValeur;
+	}
+	public JLabel getTextFacture() {
+		return textFacture;
+	}
+	public void setTextFacture(JLabel textFacture) {
+		this.textFacture = textFacture;
+	}
+	public JLabel getTextComboBox() {
+		return textComboBox;
+	}
+	public void setTextComboBox(JLabel textComboBox) {
+		this.textComboBox = textComboBox;
+	}
+	public JTextArea getTextAreaValeur() {
+		return textAreaValeur;
+	}
+	public void setTextAreaValeur(JTextArea textAreaValeur) {
+		this.textAreaValeur = textAreaValeur;
+	}
+	public JTextArea getTextAreaFacture() {
+		return textAreaFacture;
+	}
+	public void setTextAreaFacture(JTextArea textAreaFacture) {
+		this.textAreaFacture = textAreaFacture;
+	}
+	public JComboBox<String> getComboBox() {
+		return comboBox;
+	}
+	public void setComboBox(List l) {
+		this.comboBox.setModel(new DefaultComboBoxModel<String>(l.getItems()));;
+		this.comboBox.revalidate();
+	}
+	public JButton getButtonValider() {
+		return buttonValider;
+	}
+	public void setButtonValider(JButton buttonValider) {
+		this.buttonValider = buttonValider;
 	}
 	
 	

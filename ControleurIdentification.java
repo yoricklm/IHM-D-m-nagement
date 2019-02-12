@@ -2,7 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import javax.swing.JCheckBox;
+
 
 
 
@@ -20,7 +20,6 @@ public class ControleurIdentification implements ActionListener,ItemListener{
 				vue.getScroll().setViewportView(vue.getP());
 				vue.repaint();
 			}else{
-				//vue.getTextAreaElement().setText("un nombre");
 			}
 
 		}
@@ -33,7 +32,6 @@ public class ControleurIdentification implements ActionListener,ItemListener{
 			vue.getButtonAjouter().setEnabled(true);
 			vue.getScroll().setVisible(true);
 			vue.getTextAreaElement().setText("0");
-
 		}else{
 			vue.getTextAreaElement().setEnabled(false);
 			vue.getTextElement().setEnabled(false);
